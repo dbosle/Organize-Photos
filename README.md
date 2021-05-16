@@ -1,3 +1,3 @@
 # Organize Photos
-* To Organize Photos in a folder by date Order
+* Organize photos in a folder by date order
 * It has simple gui support
