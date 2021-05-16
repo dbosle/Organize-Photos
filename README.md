@@ -1,7 +1,7 @@
 # Organize Photos
 * Very simple effective program to organize photos in a folder by date order
 * It has simple gui support
-* It takes the oldest date of a file (craetion date, change date, modifying date, original date of photo etc.)
+* It takes the oldest date of a file (creation date, change date, modifying date, original date of photo etc.)
 * Renames file name with oldest date
 * Keeps the old filename in case the date is wrong
 * Groups photos by year and month
