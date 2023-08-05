@@ -17,7 +17,7 @@ from time import sleep
 import time
 
 filetypes = [".jpg", ".jpeg", ".png", ".jfif", ".tiff", ".tif"]
-mediaFileTypes = [".mp4", ".mov", ".avi", ".3gp"]
+mediaFileTypes = [".mp4", ".mov", ".avi", ".3gp", ".m4a"]
 
 def processImage(imageFile, name, extension, filepath):
     mintimestamp = getMinCreationTime(filepath)
