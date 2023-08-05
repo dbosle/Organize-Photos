@@ -16,4 +16,4 @@ new file path = 2015/07-Temmuz-2015/13Temmuz2015-12212020.jpg
 
 
 
-![organize photos cli-gui](https://github.com/dbosle/Organize-Photos/blob/main/showcase.PNG)
+![organize photos cli-gui](https://github.com/dbosle/Organize-Photos/blob/main/showcase.PNG
