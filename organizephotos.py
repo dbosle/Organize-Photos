@@ -14,7 +14,8 @@ import random
 from tkinter import Tk, filedialog
 
 
-filetypes = [".jpg", ".JPG", ".JPEG", ".jpeg", ".png", ".PNG", ".JFIF", ".jfif", ".TIFF", ".tiff", ".tif", ".TIF"]
+filetypes = [".jpg", ".jpeg", ".png", ".jfif", ".tiff", ".tif"]
+mediaFileTypes = [".mp4", ".mov", ".avi", ".3gp"]
 
 
 def processImage(imageFile, name, extension, filepath):
@@ -27,8 +28,20 @@ def processImage(imageFile, name, extension, filepath):
     targetfilepath = os.path.join(targetfolder, getfilename(os.path.join(targetfolder, filename), mintimestamp, name, extension)) # get new file path
     
     shutil.copyfile(filepath, targetfilepath) # copy file
+
+
+def processVideo(imageFile, name, extension, filepath):
+    mintimestamp = getMinCreationDateFromMedia(filepath)
+    targetfolder = createdir(mintimestamp)
+    
+    dt_object = datetime.fromtimestamp(mintimestamp)
+    filename = str(dt_object.day) + setmonth(dt_object.month) + str(dt_object.year) + "-" + name + extension # file name
+    
+    targetfilepath = os.path.join(targetfolder, getfilename(os.path.join(targetfolder, filename), mintimestamp, name, extension)) # get new file path
+    
+    shutil.copyfile(filepath, targetfilepath) # copy file   
         
-        
+
 def getfilename(targetfilepath, mintimestamp, name, extension):
     if(path.exists(targetfilepath)):
         dt_object = datetime.fromtimestamp(mintimestamp)
@@ -41,31 +54,33 @@ def getfilename(targetfilepath, mintimestamp, name, extension):
 def getMinCreationTime(imageFile):
     image = open(imageFile, 'rb')
     exifData = exifread.process_file(image, details=False)
-    exifdt = exifdto = exifdtd = datetime.now()
-    
-    i = False
+    exifdt = exifdto = datetime.now()
+
     try:
         if (exifData.get('DateTime') is not None):
             exifdt = datetime.strptime(str(exifData.get('DateTime')), "%Y:%m:%d %H:%M:%S")
         if (exifData.get('EXIF DateTimeOriginal') is not None):
             exifdto = datetime.strptime(str(exifData.get('EXIF DateTimeOriginal')), "%Y:%m:%d %H:%M:%S")
-        if (exifData.get('EXIF DateTimeDigitized') is not None):
-            exifdtd = datetime.strptime(str(exifData.get('EXIF DateTimeDigitized')), "%Y:%m:%d %H:%M:%S")
-    except:
-        print("  [-] " + imageFile) 
-        # i = True #For Debugging
-        
+    except: 
+        i = False #For Debugging
         
     imgmt = os.path.getmtime(imageFile) # değiştirme timestamp
     imgct = os.path.getctime(imageFile) # oluşturma timestamp
     exifdt = datetime.timestamp(exifdt)
     exifdto = datetime.timestamp(exifdto)
-    exifdtd = datetime.timestamp(exifdtd)
-    
-    stamps = [imgmt, imgct, exifdt, exifdto, exifdtd]
+
+    stamps = [imgmt, imgct, exifdt, exifdto]
     stamps.sort()
     return min(stamps)
-   
+
+
+def getMinCreationDateFromMedia(imageFile):
+    imgmt = os.path.getmtime(imageFile) # değiştirme timestamp
+    imgct = os.path.getctime(imageFile) # oluşturma timestamp
+    stamps = [imgmt, imgct]
+    stamps.sort()
+    return min(stamps)
+
    
 def setmonth(no):
     switcher = {
@@ -100,15 +115,14 @@ def createdir(timestamp):
     
     
 def walkdir(directory):
-    i = 0
     for root, subdirs, files in os.walk(directory):
         for imageFile in files:
             filepath = os.path.join(root, imageFile)
             name, extension = os.path.splitext(imageFile)
-            if (extension in filetypes):
+            if (extension.lower() in filetypes):
                 processImage(imageFile, name, extension, filepath)
-                i = i + 1
-                # print("[+] " + str(i) + " " + filepath)
+            elif (extension.lower() in mediaFileTypes):
+                processVideo(imageFile, name, extension, filepath)
                 
     
 def usage():
