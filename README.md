@@ -1,4 +1,4 @@
-# Organize Photos
+# Media Date Orderer
 * Very simple effective program to organize photos in a folder by date order
 * It has simple gui support
 * It takes the oldest date of a file (creation date, change date, modifying date, original date of photo etc.)
