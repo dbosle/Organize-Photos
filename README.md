@@ -13,5 +13,7 @@ new filename = 13Temmuz2015-12212020.jpg
 new file path = 2015/07-Temmuz-2015/13Temmuz2015-12212020.jpg
 ```
 
+Fix added
+
 
 ![organize photos cli-gui](https://github.com/dbosle/Organize-Photos/blob/main/showcase.PNG)
